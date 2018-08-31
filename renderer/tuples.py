@@ -50,8 +50,14 @@ class Tuple:
     def dot(self, other):
         return self.x * other.x + self.y * other.y + self.z * other.z + self.w * other.w
 
+    def red(self):
+        return self.x
 
+    def green(self):
+        return self.y
 
+    def blue(self):
+        return self.z
 
 def point(x, y, z):
     return Tuple(x, y, z, 1)
@@ -59,6 +65,16 @@ def point(x, y, z):
 
 def vector(x, y, z):
     return Tuple(x, y, z, 0)
+
+def color(x, y, z):
+    return Tuple(x, y, z, 0)
+
+
+red = color(1, 0, 0)
+green = color(0, 1, 0)
+blue = color(0, 0, 1)
+black = color(0, 0, 0)
+white = color(1, 1, 1)
 
 
 class TestStringMethods(unittest.TestCase):
@@ -126,6 +142,13 @@ class TestStringMethods(unittest.TestCase):
         v1 = vector(1, 2, 3)
         v2 = vector(2, 3, 4)
         self.assertEqual(20, v1.dot(v2))
+
+    def test_colors_as_tuples(self):
+        c = color(-0.5, 0.4, 1.7)
+        self.assertEqual(-0.5, c.red())
+        self.assertEqual(0.4, c.green())
+        self.assertEqual(1.7, c.blue())
+
 
 if __name__ == '__main__':
     unittest.main()
