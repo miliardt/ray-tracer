@@ -12,6 +12,8 @@ class Canvas():
             for y in range(height)]
 
     def write_pixel(self, column, row, color):
+        if column < 0 or column >= self.width: return
+        if row < 0 or row >= self.height: return
         self.canvas[row][column] = color
 
     def pixel_at(self, column, row):
@@ -51,6 +53,7 @@ class Canvas():
     def save_to_file(self, path):
         with open(path,'w') as file:
             file.write(self.to_ppm())
+
 
 class TestStringMethods(unittest.TestCase):
 

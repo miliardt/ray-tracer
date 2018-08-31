@@ -1,4 +1,5 @@
-from renderer.tuples import point, vector
+from renderer.tuples import point, vector, green
+from renderer.canvas import Canvas
 
 class Projectile:
 
@@ -23,13 +24,16 @@ def tick(world, projectile):
 
 if __name__ == '__main__':
     w = World(vector(0, -0.1, 0), vector(-0.01, 0, 0))
-    p = Projectile(position=point(0, 1, 0), velocity=vector(1, 1, 0).normalize())
+    p = Projectile(position=point(0, 1, 0), velocity=vector(1, 1.8, 0).normalize() * 11.25)
+
+    c = Canvas(900, 550)
 
     t = 0
 
     while p.position.y > 0:
         p = tick(w, p)
         t += 1
-        print(t)
-        print(p)
 
+        c.write_pixel(round(p.position.x), c.height - round(p.position.y), green)
+
+    c.save_to_file('projectile.ppm')
