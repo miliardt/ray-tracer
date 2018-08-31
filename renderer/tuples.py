@@ -1,6 +1,7 @@
 import unittest
 import math
 
+
 class Tuple:
 
     def __init__(self, x: float, y: float, z: float, w: float):
@@ -45,6 +46,9 @@ class Tuple:
     def __eq__(self, o: object) -> bool:
         if not isinstance(o, Tuple): return False
         return self.x == o.x and self.y == o.y and self.z == o.z and self.w == o.w
+
+    def dot(self, other):
+        return self.x * other.x + self.y * other.y + self.z * other.z + self.w * other.w
 
 
 
@@ -118,6 +122,10 @@ class TestStringMethods(unittest.TestCase):
         v1 = vector(1, 2, 3)
         self.compare_tuples(vector(0.26726, 0.53452, 0.80178), v1.normalize())
 
+    def test_dot_product(self):
+        v1 = vector(1, 2, 3)
+        v2 = vector(2, 3, 4)
+        self.assertEqual(20, v1.dot(v2))
 
 if __name__ == '__main__':
     unittest.main()
