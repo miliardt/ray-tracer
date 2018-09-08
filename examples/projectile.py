@@ -1,6 +1,7 @@
 from renderer.tuples import point, vector, green
 from renderer.canvas import Canvas
 
+
 class Projectile:
 
     def __init__(self, position, velocity):
