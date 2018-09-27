@@ -1,4 +1,6 @@
 import unittest
+
+from renderer.test_utils import CommonTestBase
 from renderer.tuples import color
 
 
@@ -55,7 +57,7 @@ class Canvas():
             file.write(self.to_ppm())
 
 
-class TestStringMethods(unittest.TestCase):
+class TestStringMethods(CommonTestBase):
 
     def test_is_canvas(self):
         c = Canvas(10, 20)

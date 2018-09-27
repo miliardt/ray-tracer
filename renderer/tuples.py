@@ -1,6 +1,8 @@
 import unittest
 import math
 
+from renderer.test_utils import CommonTestBase
+
 
 class Tuple:
 
@@ -77,7 +79,7 @@ black = color(0, 0, 0)
 white = color(1, 1, 1)
 
 
-class TestStringMethods(unittest.TestCase):
+class TestStringMethods(CommonTestBase):
 
     def test_is_point(self):
         a = Tuple(4.3, -4.2, 3.1, 1.0)
@@ -110,7 +112,7 @@ class TestStringMethods(unittest.TestCase):
         a2 = Tuple(-2, 3, 1, 0)
         self.assertEqual(Tuple(1, 1, 6, 1), a1 + a2)
 
-    def test_substract_tuples(self):
+    def test_subtract_tuples(self):
         a1 = point(3, 2, 1)
         a2 = point(5, 6, 7)
         self.assertEqual(vector(-2, -4, -6), a1 - a2)
@@ -130,9 +132,6 @@ class TestStringMethods(unittest.TestCase):
     def test_length(self):
         a1 = vector(1, 2, 3)
         self.assertEqual(math.sqrt(14.0), a1.length())
-
-    def compare_tuples(self, t1, t2, delta=0.0001):
-        self.assertTrue((t1 - t2).length() < delta)
 
     def test_normalize(self):
         v1 = vector(1, 2, 3)

@@ -1,5 +1,6 @@
 import unittest
 
+from renderer.test_utils import CommonTestBase
 from renderer.tuples import Tuple
 
 
@@ -74,8 +75,14 @@ class Matrix4:
         d = self.determinant()
         return Matrix4([[self.cofactor(j, i) / d for j in range(4)] for i in range(4)])
 
+    def then(self, matrix):
+        return matrix * self
+
     def __repr__(self):
         return str(self.l)
+
+
+
 
 
 class Matrix3:
@@ -139,7 +146,7 @@ identity_matrix = Matrix4(1, 0, 0, 0,
                           0, 0, 0, 1)
 
 
-class TestMatrixMethods(unittest.TestCase):
+class TestMatrixMethods(CommonTestBase):
 
     def test_create_matrix(self):
         m = Matrix4(1, 2, 3, 4,
@@ -170,6 +177,23 @@ class TestMatrixMethods(unittest.TestCase):
                            45, 94, 188, 376)
 
         self.assertEqual(expected, a * b)
+
+    def test_then_method(self):
+        a = Matrix4(1, 2, 3, 4,
+                    2, 3, 4, 5,
+                    3, 4, 5, 6,
+                    4, 5, 6, 7)
+        b = Matrix4(0, 1, 2, 4,
+                    1, 2, 4, 8,
+                    2, 4, 8, 16,
+                    4, 8, 16, 32)
+        expected = Matrix4(24, 49, 98, 196,
+                           31, 64, 128, 256,
+                           38, 79, 158, 316,
+                           45, 94, 188, 376)
+
+        self.assertEqual(expected, b.then(a))
+
 
     def test_multiply_matrix_by_tuple(self):
         a = Matrix4(1, 2, 3, 4,
@@ -279,7 +303,6 @@ class TestMatrixMethods(unittest.TestCase):
         self.assert_matrix_equals(expected, b)
         self.assert_matrix_equals(identity_matrix, a* b)
 
-    def assert_matrix_equals(self,expected,actual):
-        for i in range(4):
-            for j in range(4):
-                self.assertAlmostEqual(expected[i,j], actual[i,j], delta=0.00001)
+
+if __name__ == '__main__':
+    unittest.main()
