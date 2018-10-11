@@ -19,7 +19,7 @@ class Tuple:
         return Tuple(self.x - other.x, self.y - other.y, self.z - other.z, self.w - other.w)
 
     def __neg__(self):
-        return  Tuple(-self.x, -self.y, -self.z, -self.w)
+        return Tuple(-self.x, -self.y, -self.z, -self.w)
 
     def __mul__(self, other):
         return Tuple(self.x * other, self.y * other, self.z * other, self.w * other)
@@ -40,7 +40,7 @@ class Tuple:
         return '(' + str(self.x) + ',' + str(self.y) + ',' + str(self.z) + ',' + str(self.w) + ')'
 
     def length(self) -> float:
-        return math.sqrt(self.x**2 + self.y**2 + self.z**2 + self.w**2)
+        return math.sqrt(self.x ** 2 + self.y ** 2 + self.z ** 2 + self.w ** 2)
 
     def __repr__(self):
         return self.__str__()
@@ -61,12 +61,14 @@ class Tuple:
     def blue(self):
         return self.z
 
+
 def point(x, y, z):
     return Tuple(x, y, z, 1)
 
 
 def vector(x, y, z):
     return Tuple(x, y, z, 0)
+
 
 def color(x, y, z):
     return Tuple(x, y, z, 0)

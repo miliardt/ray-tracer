@@ -20,6 +20,8 @@ class Matrix4:
                       [0, 0, 0, 0],
                       [0, 0, 0, 0]]
 
+        self._cached_inverse = None
+
     def __getitem__(self, item):
         m, n = item
         return self.l[m][n]
@@ -72,8 +74,10 @@ class Matrix4:
         return outcome
 
     def inverse(self):
-        d = self.determinant()
-        return Matrix4([[self.cofactor(j, i) / d for j in range(4)] for i in range(4)])
+        if self._cached_inverse is None:
+            d = self.determinant()
+            self._cached_inverse = Matrix4([[self.cofactor(j, i) / d for j in range(4)] for i in range(4)])
+        return self._cached_inverse
 
     def then(self, matrix):
         return matrix * self
