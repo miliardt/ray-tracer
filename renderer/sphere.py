@@ -1,6 +1,7 @@
 from math import sqrt
 
 import renderer.intersections as intersections
+from renderer.materials import Material
 from renderer.matrices import identity_matrix
 from renderer.rays import Ray
 from renderer.tuples import point
@@ -10,6 +11,7 @@ class Sphere:
 
     def __init__(self):
         self.transform = identity_matrix
+        self.material = Material()
 
     def intersect(self, r: Ray):
         ray2 = r.transform(self.transform.inverse())
@@ -32,3 +34,9 @@ class Sphere:
 
     def set_transform(self, t):
         self.transform = t
+
+    def normal_at(self, world_point):
+        object_point = self.transform.inverse() * world_point
+        object_normal = object_point - point(0, 0, 0)
+        world_normal = self.transform.inverse().transpose().multiply3x3matrix(object_normal)
+        return world_normal.normalize()

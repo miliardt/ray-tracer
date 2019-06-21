@@ -1,5 +1,7 @@
+import math
 import unittest
 
+from renderer.materials import Material
 from renderer.matrices import identity_matrix
 from renderer.rays import Ray
 from renderer.sphere import Sphere
@@ -82,6 +84,70 @@ class SphereTest(CommonTestBase):
         xs = s.intersect(r)
 
         self.assertEqual(0, len(xs))
+
+    def test_normal_on_sphere_at_point_on_x_axis(self):
+        s = Sphere()
+
+        n = s.normal_at(point(1, 0, 0))
+
+        self.assertEqual(vector(1, 0, 0), n)
+
+    def test_normal_on_sphere_at_point_on_y_axis(self):
+        s = Sphere()
+
+        n = s.normal_at(point(0, 1, 0))
+
+        self.assertEqual(vector(0, 1, 0), n)
+
+    def test_normal_on_sphere_at_point_on_z_axis(self):
+        s = Sphere()
+
+        n = s.normal_at(point(0, 0, 1))
+
+        self.assertEqual(vector(0, 0, 1), n)
+
+    def test_normal_on_sphere_at_point_on_none_axial_point(self):
+        s = Sphere()
+
+        n = s.normal_at(point(math.sqrt(3) / 3, math.sqrt(3) / 3, math.sqrt(3) / 3))
+
+        self.assertEqual(n.normalize(), n)
+
+    def test_normal_is_normalized_vector(self):
+        s = Sphere()
+
+        n = s.normal_at(point(math.sqrt(3) / 3, math.sqrt(3) / 3, math.sqrt(3) / 3))
+
+        self.assertEqual(n.normalize(), n)
+
+    def test_computing_normal_on_translated_sphere(self):
+        s = Sphere()
+        s.set_transform(translation(0, 1, 0))
+
+        n = s.normal_at(point(0, 1.70711, -0.70711))
+
+        self.assert_tuple_equals(vector(0, 0.70711, -0.70711), n, 0.001)
+
+    def test_computing_normal_on_scaled_sphere(self):
+        s = Sphere()
+        s.set_transform(scaling(1, 0.5, 1))
+
+        n = s.normal_at(point(0, math.sqrt(2) / 2, -math.sqrt(2) / 2))
+
+        self.assert_tuple_equals(vector(0, 0.97014, -0.24254), n, 0.001)
+
+    def test_sphere_has_default_material(self):
+        s = Sphere()
+        m = s.material
+
+        self.assertEqual(Material(), m)
+
+    def test_sphere_may_be_assigned_material(self):
+        s = Sphere()
+        m = Material(ambient=1)
+        s.material = m
+
+        self.assertEqual(m, s.material)
 
 
 if __name__ == '__main__':

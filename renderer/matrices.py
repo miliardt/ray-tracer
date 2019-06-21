@@ -44,6 +44,12 @@ class Matrix4:
                          self[2, 0] * other.x + self[2, 1] * other.y + self[2, 2] * other.z + self[2, 3] * other.w,
                          self[3, 0] * other.x + self[3, 1] * other.y + self[3, 2] * other.z + self[3, 3] * other.w)
 
+    def multiply3x3matrix(self, other):
+        return Tuple(self[0, 0] * other.x + self[0, 1] * other.y + self[0, 2] * other.z,
+                     self[1, 0] * other.x + self[1, 1] * other.y + self[1, 2] * other.z,
+                     self[2, 0] * other.x + self[2, 1] * other.y + self[2, 2] * other.z,
+                     0)
+
     def submatrix(self, row, col):
         return Matrix3([[self[i, j] for j in range(4) if j != col] for i in range(4) if i != row])
 

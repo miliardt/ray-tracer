@@ -58,6 +58,12 @@ class Tuple:
     def blue(self):
         return self.z
 
+    def reflect(self, normal):
+        return self - normal * 2 * self.dot(normal)
+
+    def mul(self, other):
+        return Tuple(self.x * other.x, self.y * other.y, self.z * other.z, self.w * other.w)
+
 
 def point(x, y, z):
     return Tuple(x, y, z, 1)

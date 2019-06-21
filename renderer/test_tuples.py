@@ -74,5 +74,21 @@ class TestStringMethods(CommonTestBase):
         self.assertEqual(1.7, c.blue())
 
 
+    def test_reflecting_vector_approaching_45_degrees(self):
+        v = vector(1, -1, 0)
+        n = vector(0, 1, 0)
+        r = v.reflect(n)
+
+        self.assertEqual(vector(1, 1, 0), r)
+
+    def test_reflecting_vector_of_slanted_surface(self):
+        v = vector(0, -1, 0)
+        n = vector(math.sqrt(2) / 2, math.sqrt(2) / 2, 0)
+        r = v.reflect(n)
+
+        self.assert_tuple_equals(vector(1, 0, 0), r, 0.001)
+
+
+
 if __name__ == '__main__':
     unittest.main()
