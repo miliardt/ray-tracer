@@ -1,12 +1,13 @@
 import unittest
 from math import pi, sqrt
 
+from renderer.matrices import identity_matrix, Matrix4
 from renderer.test_utils import CommonTestBase
-from renderer.transformations import translation, scaling, rotation_x, rotation_y, rotation_z
+from renderer.transformations import translation, scaling, rotation_x, rotation_y, rotation_z, view_transform
 from renderer.tuples import point, vector
 
 
-class TestMatrixMethods(CommonTestBase):
+class TransformationTest(CommonTestBase):
 
     def test_multiplying_by_translation_matrix(self):
         p = point(-3, 4, 5)
@@ -78,6 +79,46 @@ class TestMatrixMethods(CommonTestBase):
         t = c * b * a
 
         self.assertEqual(point(15, 0, 7), t * p)
+
+    def test_transformation_matrix_for_the_default_orientation(self):
+        from_where = point(0, 0, 0)
+        to = point(0, 0, -1)
+        up = vector(0, 1, 0)
+
+        t = view_transform(from_where, to, up)
+
+        self.assert_matrix_equals(identity_matrix, t)
+
+    def test_view_transformation_matrix_looking_in_positive_z_direction(self):
+        from_where = point(0, 0, 0)
+        to = point(0, 0, 1)
+        up = vector(0, 1, 0)
+
+        t = view_transform(from_where, to, up)
+
+        self.assertEqual(scaling(-1, 1, -1), t)
+
+    def test_the_view_trasnformation_move_the_world(self):
+        from_where = point(0, 0, 8)
+        to = point(0, 0, 0)
+        up = vector(0, 1, 0)
+
+        t = view_transform(from_where, to, up)
+
+        self.assert_matrix_equals(translation(0, 0, -8), t)
+
+    def test_arbitrary_view_transformation(self):
+        from_where = point(1, 3, 2)
+        to = point(4, -2, 8)
+        up = vector(1, 1, 0)
+
+        t = view_transform(from_where, to, up)
+        m = Matrix4(-0.50709, 0.50709, 0.67612, -2.36643,
+                    0.76772, 0.60609, 0.12122, -2.82843,
+                    -0.35857, 0.59761, -0.71714, 0.00000,
+                    0.00000, 0.00000, 0.00000, 1.00000)
+
+        self.assert_matrix_equals(m, t)
 
 
 if __name__ == '__main__':

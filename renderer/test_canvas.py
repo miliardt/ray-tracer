@@ -5,7 +5,7 @@ from renderer.test_utils import CommonTestBase
 from renderer.tuples import color
 
 
-class TestStringMethods(CommonTestBase):
+class CanvasTest(CommonTestBase):
 
     def test_is_canvas(self):
         c = Canvas(10, 20)

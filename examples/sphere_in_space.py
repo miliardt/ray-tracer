@@ -5,12 +5,14 @@ from renderer.intersections import hit
 from renderer.lights import PointLight
 from renderer.rays import Ray
 from renderer.sphere import Sphere
+from renderer.transformations import scaling
 from renderer.tuples import point, color
 
 s = Sphere()
-s.material.color = color(0.5, 0.6, 1)
-light_position = point(20, -20, -10)
-light_color = color(0.5, 0.5, 1)
+s.set_transform(scaling(0.5,1,1))
+s.material.color = color(1, 0.2, 1)
+light_position = point(-10, 10, -10)
+light_color = color(1, 1, 1)
 light = PointLight(light_position, light_color)
 ray_origin = point(0, 0, -5)
 wall_z = 10
@@ -41,4 +43,4 @@ for y in range(canvas_pixels):
 
             c.write_pixel(x, y, color)
 
-c.save_to_file('sphere2.ppm')
+c.save_to_file('sphere6.ppm')

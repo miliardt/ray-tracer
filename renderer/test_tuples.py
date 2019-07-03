@@ -4,7 +4,7 @@ from renderer.test_utils import CommonTestBase
 from renderer.tuples import Tuple, point, vector, color
 
 
-class TestStringMethods(CommonTestBase):
+class TuplesTest(CommonTestBase):
 
     def test_is_point(self):
         a = Tuple(4.3, -4.2, 3.1, 1.0)
@@ -73,7 +73,6 @@ class TestStringMethods(CommonTestBase):
         self.assertEqual(0.4, c.green())
         self.assertEqual(1.7, c.blue())
 
-
     def test_reflecting_vector_approaching_45_degrees(self):
         v = vector(1, -1, 0)
         n = vector(0, 1, 0)
@@ -88,6 +87,12 @@ class TestStringMethods(CommonTestBase):
 
         self.assert_tuple_equals(vector(1, 0, 0), r, 0.001)
 
+    def test_cross_product_of_two_vectors(self):
+        a = vector(1, 2, 3)
+        b = vector(2, 3, 4)
+
+        self.assertEqual(vector(-1, 2, -1), a.cross(b))
+        self.assertEqual(vector(1, -2, 1), b.cross(a))
 
 
 if __name__ == '__main__':

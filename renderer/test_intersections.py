@@ -73,6 +73,37 @@ class SphereTest(CommonTestBase):
 
         self.assertEqual(i4, h)
 
+    def test_precomputing_state_of_intersection(self):
+        ray = Ray(point(0, 0, -5), vector(0, 0, 1))
+        shape = Sphere()
+        xs = Intersection(4, shape)
+        xs.prepare_hit(ray)
+
+        self.assertEqual(point(0, 0, -1), xs.point)
+        self.assertEqual(vector(0, 0, -1), xs.eyev)
+        self.assertEqual(vector(0, 0, -1), xs.normalv)
+
+    def test_intersection_occurs_on_the_outside(self):
+        ray = Ray(point(0, 0, -5), vector(0, 0, 1))
+        shape = Sphere()
+        xs = Intersection(4, shape)
+
+        xs.prepare_hit(ray)
+
+        self.assertEqual(False, xs.inside)
+
+    def test_intersection_occurs_on_the_inside(self):
+        ray = Ray(point(0, 0, 0), vector(0, 0, 1))
+        shape = Sphere()
+        xs = Intersection(1, shape)
+
+        xs.prepare_hit(ray)
+
+        self.assertEqual(point(0, 0, 1), xs.point)
+        self.assertEqual(vector(0, 0, -1), xs.eyev)
+        self.assertEqual(True, xs.inside)
+        self.assertEqual(vector(0, 0, -1), xs.normalv)
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -64,6 +64,11 @@ class Tuple:
     def mul(self, other):
         return Tuple(self.x * other.x, self.y * other.y, self.z * other.z, self.w * other.w)
 
+    def cross(self, other):
+        return vector(self.y * other.z - self.z * other.y,
+                      self.z * other.x - self.x * other.z,
+                      self.x * other.y - self.y * other.x)
+
 
 def point(x, y, z):
     return Tuple(x, y, z, 1)

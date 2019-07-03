@@ -9,7 +9,7 @@ from renderer.tuples import point
 
 class Sphere:
 
-    def __init__(self):
+    def __init__(self, **kwargs):
         self.transform = identity_matrix
         self.material = Material()
 

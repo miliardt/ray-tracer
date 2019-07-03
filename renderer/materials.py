@@ -34,10 +34,11 @@ class Material:
             diffuse = effective_color * self.diffuse * light_dot_normal
 
             reflectv = -lightv.reflect(normalv)
-            reflect_dot_eye = pow(reflectv.dot(eyev), self.shininess)
+            reflect_dot_eye = reflectv.dot(eyev)
             if reflect_dot_eye <= 0:
                 specular = black
             else:
-                specular =  light.intensity * reflect_dot_eye * self.specular
+                factor = pow(reflect_dot_eye, self.shininess)
+                specular = light.intensity * factor * self.specular
 
         return ambient + diffuse + specular

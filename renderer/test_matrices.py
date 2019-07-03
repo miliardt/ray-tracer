@@ -1,11 +1,12 @@
-from _pytest import unittest
+import unittest
 
 from renderer.matrices import identity_matrix, Matrix4, Matrix3, Matrix2
 from renderer.test_utils import CommonTestBase
-from renderer.tuples import Tuple
+from renderer.transformations import view_transform, translation, scaling
+from renderer.tuples import Tuple, vector, point
 
 
-class TestMatrixMethods(CommonTestBase):
+class MatrixTest(CommonTestBase):
 
     def test_create_matrix(self):
         m = Matrix4(1, 2, 3, 4,
@@ -160,6 +161,8 @@ class TestMatrixMethods(CommonTestBase):
                            -0.52256, -0.81391, -0.30075, 0.30639)
         self.assert_matrix_equals(expected, b)
         self.assert_matrix_equals(identity_matrix, a * b)
+
+
 
 
 if __name__ == '__main__':
