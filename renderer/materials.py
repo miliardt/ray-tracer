@@ -20,14 +20,14 @@ class Material:
                self.specular == o.specular and \
                self.shininess == o.shininess
 
-    def lighting(self, light, position, eyev, normalv):
+    def lighting(self, light, position, eyev, normalv, in_shadow=False):
         effective_color = self.color.mul(light.intensity)
         lightv = (light.position - position).normalize()
 
         ambient = effective_color * self.ambient
         light_dot_normal = lightv.dot(normalv)
 
-        if light_dot_normal < 0:
+        if light_dot_normal < 0 or in_shadow:
             diffuse = black
             specular = black
         else:

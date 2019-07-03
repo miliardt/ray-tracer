@@ -6,6 +6,7 @@ from renderer.lights import PointLight
 from renderer.materials import Material
 from renderer.test_utils import CommonTestBase
 from renderer.tuples import point, color, vector
+from renderer.world import default_world
 
 
 class MaterialTest(CommonTestBase):
@@ -59,6 +60,16 @@ class MaterialTest(CommonTestBase):
         light = PointLight(point(0, 0, 10), color(1, 1, 1))
 
         self.assertEqual(color(0.1, 0.1, 0.1), self.material.lighting(light, self.position, eyev, normalv))
+
+    def test_lighting_with_the_surface_in_shadow(self):
+        eyev = vector(0, 0, -1)
+        normal = vector(0, 0, -1)
+        light = PointLight(point(0, 0, -10), color(1, 1, 1))
+        in_shadow = True
+
+        result = self.material.lighting(light, self.position, eyev, normal, in_shadow)
+
+        self.assert_tuple_equals(color(0.1, 0.1, 0.1), result, 0.001)
 
 
 if __name__ == '__main__':

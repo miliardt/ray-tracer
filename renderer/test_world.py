@@ -106,6 +106,30 @@ class WorldTest(CommonTestBase):
 
         self.assertEqual(inner.material.color, c)
 
+    def test_there_is_no_shadow_when_nothing_is_collinear_with_point_and_light(self):
+        world = default_world()
+        p = point(0, 10, 0)
+
+        self.assertEqual(False, is_shadowed(world, p))
+
+    def test_shadow_when_an_object_is_between_the_point_and_the_light(self):
+        world = default_world()
+        p = point(10, -10, 10)
+
+        self.assertEqual(True, is_shadowed(world, p))
+
+    def test_there_is_no_shadow_when_an_object_is_behind_the_light(self):
+        world = default_world()
+        p = point(-20, 20, -20)
+
+        self.assertEqual(False, is_shadowed(world, p))
+
+    def test_there_is_no_shadow_when_an_object_is_behind_the_point(self):
+        world = default_world()
+        p = point(-2, 2, -2)
+
+        self.assertEqual(False, is_shadowed(world, p))
+
 
 if __name__ == '__main__':
     unittest.main()
